@@ -1,6 +1,13 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .models import Item
+from .serializers import ItemSerializer
 
 
-def index(request):
-    return HttpResponse('<h1>hello<h1>')
+class Index(APIView):
+    def get(self, request):
+        qs = Item.objects.all()
+        serializer = ItemSerializer(qs, many=True)
+        return Response(serializer.data, status=200)
+
+
