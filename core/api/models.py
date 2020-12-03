@@ -1,8 +1,11 @@
 from django.db import models
 from datetime import datetime
+from django.contrib.auth.models import User
+
 
 
 class Item(models.Model):
+    created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     price = models.IntegerField()
