@@ -10,4 +10,6 @@ urlpatterns = [
     path('login/', LoginView.as_view()),
     path('logout/', LogoutView.as_view()),
     path('accounts/', include('allauth.urls')),
+
+    path('auth/', include('rest_auth.urls'))
 ]
