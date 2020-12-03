@@ -6,7 +6,7 @@ from .models import Item
 from .serializers import ItemSerializer
 from rest_framework import generics
 from rest_framework import mixins
-from rest_framework.authentication import SessionAuthentication, BaseAuthentication, TokenAuthentication
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BaseAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 
 # CSRF Token uses by sessions authentications
@@ -21,7 +21,7 @@ class IndexListGenerics(generics.ListAPIView,
     serializer_class = ItemSerializer
     queryset = Item.objects.all()
     lookup_field = 'id'
-    authentication_classes = [TokenAuthentication, SessionAuthentication, BaseAuthentication]
+    authentication_classes = [SessionAuthentication ,BaseAuthentication ,TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request,id=None):
@@ -34,13 +34,10 @@ class IndexListGenerics(generics.ListAPIView,
     def post(self, request):
         return self.create(request)
     
-    def perform_create(self, serializer):
-        serializer.save(created_by=request.user)
-    
     def put(self, request, id=None):
         return self.update(request, id)
     
-    def destroy(self, request, id):
+    def delete(self, request, id=None):
         return self.destroy(request, id)
 
 
